@@ -21,7 +21,7 @@ public class Categoria extends RepresentationModel<Categoria> {
 	private String nombre;
 	
 	@Column(name="descripcion")
-	@Size(min=10, message="Debe tener al menos 3 caracteres")
+	@Size(min=10, message="Debe tener al menos 10 caracteres")
 	@NotNull
 	private String descripcion;
 

@@ -1,5 +1,9 @@
 package com.elementary.spring.mvc.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,10 +14,17 @@ public class PedidoItem {
 	@Id
 	@Column(name="id")
     private int id;
-	
-	@ManyToOne
+
+	//@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
-	
+
+
+
+
+
 	@ManyToOne
 	private Producto producto;
 	
@@ -34,6 +45,14 @@ public class PedidoItem {
 		this.descuento = descuento;
 		this.subtotal = subtotal;
 		this.total = total;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Pedido getPedido() {

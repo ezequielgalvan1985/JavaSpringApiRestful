@@ -1,11 +1,15 @@
 package com.elementary.spring.mvc.security;
+import com.elementary.spring.mvc.dto.LoginResponseDto;
+import com.elementary.spring.mvc.model.Usuario;
 import com.auth0.jwt.JWT;
 import com.elementary.spring.mvc.core.LoginViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -16,14 +20,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
     private AuthenticationManager authenticationManager;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+        setFilterProcessesUrl("/auth/login"); 
     }
 
     /* Trigger when we issue POST request to /login
@@ -31,7 +38,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
+            System.out.println("attemptAuthentication");
         // Grab credentials and map them to login viewmodel
         LoginViewModel credentials = null;
         try {
@@ -53,17 +60,30 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, 
+                Authentication authResult) throws IOException, ServletException {
         // Grab principal
         UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
+        System.out.println("successfulAuthentication - usuario logueado");
+
+        final String authorities = authResult.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.joining(","));
 
         // Create JWT Token
         String token = JWT.create()
                 .withSubject(principal.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .withClaim("ROLES", authorities)
                 .sign(HMAC512(JwtProperties.SECRET.getBytes()));
 
         // Add token in response
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX +  token);
+
+        LoginResponseDto jsonResponse = new LoginResponseDto(token,principal.getUsername(),principal.getUserId());
+        JSONObject jo = new JSONObject(jsonResponse);
+        response.getWriter().write(jo.toString());
+        response.getWriter().flush();
+        System.out.println("successfulAuthentication - TOKEN "+ token);
     }
 }

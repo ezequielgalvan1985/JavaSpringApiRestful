@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.elementary.spring.mvc.repository.EstadoRepository;
 import com.elementary.spring.mvc.model.Estado;
-import com.elementary.spring.mvc.model.Marca;
+
 
 import org.springframework.http.HttpStatus;
 

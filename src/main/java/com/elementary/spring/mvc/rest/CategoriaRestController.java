@@ -14,56 +14,61 @@ import com.elementary.spring.mvc.repository.CategoriaRepository;
 
 
 import com.elementary.spring.mvc.model.Categoria;
-import com.elementary.spring.mvc.exception.CategoriaCustomNotFoundException;
+import com.elementary.spring.mvc.exception.CategoriaNotFoundException;
+import com.elementary.spring.mvc.helpers.assemblers.CategoriaModelAssembler;
+
 import org.springframework.http.HttpStatus;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/v1/categorias")
 
 public class CategoriaRestController {
 	
+	private static final Logger log = LoggerFactory.getLogger(CategoriaRestController.class);
+
+
 	@Autowired
 	private CategoriaRepository repo;
-
+	
+	@Autowired
+  	private  CategoriaModelAssembler assembler;
 
 	public List<Categoria> findAll(){
 			List<Categoria> t =repo.findAll();
 			return t;
 	}
-
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping()
-	@CrossOrigin(origins="http://localhost:3000")
-	public CollectionModel<EntityModel<Categoria>> all() {
-
+	public List<Categoria> all() {
+		/*
 		List<EntityModel<Categoria>> categorias =
 				repo.findAll().stream()
-				.map(c -> new EntityModel<Categoria>(c,
-						linkTo(methodOn(CategoriaRestController.class)
-								.view(c.getId())).withSelfRel(),
-						linkTo(methodOn(CategoriaRestController.class)
-								.findAll()).withRel("categorias")))
-						.collect(Collectors.toList());
-		CollectionModel<EntityModel<Categoria>> lc = new CollectionModel (categorias, linkTo(methodOn(CategoriaRestController.class).all()).withSelfRel());
-		return lc;
+				.map(assembler::toModel)
+				.collect(Collectors.toList());
+		return new CollectionModel (categorias, linkTo(methodOn(CategoriaRestController.class).all()).withSelfRel());
+		*/
+		return repo.findAll();
+
 	}
 
 
 	@GetMapping(value="/{id}")
 	public EntityModel<Categoria> view(@PathVariable("id") Integer id){
-		Categoria c =repo.findById(id).orElseThrow(() -> new CategoriaCustomNotFoundException("No se encontro Categoria id: " + id.toString()));
-		return new EntityModel<Categoria>(c,
-			    linkTo(methodOn(CategoriaRestController.class).view(id)).withSelfRel(),
-			    linkTo(methodOn(CategoriaRestController.class).findAll()).withRel("categorias"));
+		Categoria c =repo.findById(id).orElseThrow(() -> new CategoriaNotFoundException(id));
+		return assembler.toModel(c);
 
 	}
 	
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
 	public void add(@RequestBody Categoria e){
+		log.info("create categoria: " + e.toString());
 		repo.save(e);
 	}
 

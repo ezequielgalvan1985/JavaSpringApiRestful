@@ -12,7 +12,7 @@ import com.elementary.spring.mvc.repository.UsuarioRepository;
 @Service
 public class UserService implements UserDetailsService{
 
-
+	@Autowired
 	private UsuarioRepository repo;
 
 	public UserService(UsuarioRepository userRepository) {
@@ -26,5 +26,11 @@ public class UserService implements UserDetailsService{
 		return up;
 	}
 
+	public UserPrincipal loadUserByUsernameUserPrincipal(String username) throws UsernameNotFoundException {
+		Usuario u = repo.findByUsername(username);
+		UserPrincipal up = new UserPrincipal(u);
+		return up;
+	}
+	
 
 }

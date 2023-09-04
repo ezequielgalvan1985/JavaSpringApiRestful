@@ -1,13 +1,15 @@
 package com.elementary.spring.mvc.model;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Entity
 @Table(name="Users")
-public class Usuario {
+public class Usuario implements Serializable{
 	
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id

@@ -2,10 +2,10 @@ package com.elementary.spring.mvc.security;
 
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.elementary.spring.mvc.model.Usuario;
 import com.elementary.spring.mvc.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,14 +21,22 @@ import java.io.IOException;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+    
 
     private UsuarioRepository userRepository;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UsuarioRepository userRepository) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
-        this.userRepository = userRepository;
+    }
+    
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UsuarioRepository u) {
+        super(authenticationManager);
+        this.userRepository = u;
+
+
     }
 
+   
 
 
     @Override
@@ -41,7 +49,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
-
+        System.out.println("doFilterInternal: "+ header);
         // If header is present, try grab user principal from database and perform authorization
         Authentication authentication = getUsernamePasswordAuthentication(request);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -64,6 +72,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             // Search in the DB if we find the user by token subject (username)
             // If so, then grab user details and create spring auth token using username, pass, authorities/roles
             if (userName != null) {
+                
                 Usuario user = userRepository.findByUsername(userName);
                 UserPrincipal principal = new UserPrincipal(user);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userName, null, principal.getAuthorities());

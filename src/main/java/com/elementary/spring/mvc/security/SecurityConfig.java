@@ -7,28 +7,40 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.elementary.spring.mvc.security.UserService;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static org.springframework.http.HttpMethod.*;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
-	private UsuarioRepository userRepository;
+	
+	@Autowired
 	private UserService userService;
 
-	public SecurityConfig(UserService us , UsuarioRepository userRepository ){
-		this.userRepository = userRepository;
-		this.userService = us;
-	}
-
+	@Autowired
+	private UsuarioRepository userRepository;
+	
+	
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -45,56 +57,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-            	.csrf().disable()
 
-				//.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				//.addFilter(new JwtAuthenticationFilter(authenticationManager()))
-				//.addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
-				.authorizeRequests()
+				http.cors().and().
+				csrf().disable().authorizeRequests()
+						.antMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
-				// configure access rules
-				//tutorial
-				.antMatchers(HttpMethod.GET, "/").permitAll()
-				.antMatchers(HttpMethod.POST, "/v1/mercadopago/procesar_pago").permitAll()
-				.antMatchers(HttpMethod.POST, "/login").permitAll()
-				.antMatchers("/api/public/admin/*").hasRole("ADMIN")
-				//Determinar permisos a las urls
-				.antMatchers("/profile/**").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/management/**").hasAnyRole("ADMIN", "MANAGER")
-                .antMatchers("/v1/categorias/**").permitAll()
-				.antMatchers("/v1/marcas/**").hasRole("MANAGER")
-				.antMatchers("/mercadopago/**").permitAll()
+						.antMatchers("/v2/api-docs",
+                                   "/configuration/ui",
+                                   "**/swagger-resources/**",
+                                   "/configuration/security",
+                                   "/swagger-ui.html",
+                                   "/webjars/**").permitAll()//authenticated().and().httpBasic().authenticationEntryPoint((swaggerAuthenticationEntryPoint()))
 
-				// Auth basic con esto se configura el login con seguridad basica
-				.anyRequest().authenticated().and()
-                .httpBasic()
-                //.authenticationEntryPoint(authenticationEntryPoint)
-                //.and()
-                //.authenticationProvider(getProvider());
-				// Auth basic
-/*
-// con esto se activa el formulario login desde un navegador
-				.and()
-				.formLogin()
-				.loginPage("/login").permitAll()
-				.loginProcessingUrl("/signin")
-				.usernameParameter("txtUsername")
-				.passwordParameter("txtPassword")
-				.and()
-				.logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/login")
-				.and()
-				.rememberMe()
-				.tokenValiditySeconds(2592000).key("mySecret!")
-				.rememberMeParameter("checkRememberMe");
-*/
+				.anyRequest().authenticated()
+                .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
 
+                // this disables session creation on Spring Security
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		;
+		  
 	}
-
+ 
 	@Bean
 	DaoAuthenticationProvider authenticationProvider(){
 		DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider();
@@ -102,9 +87,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		daoAuthenticationProvider.setUserDetailsService(this.userService);
 		return daoAuthenticationProvider;
 	}
+/*
+	@Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
+        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        source.registerCorsConfiguration("/**", corsConfiguration);
 
+        return source;
+    }
 
-
-	
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8100"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+		configuration.setAllowCredentials(true);
+		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
+		configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
+		configuration.setMaxAge(3600L);
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+*/
 }

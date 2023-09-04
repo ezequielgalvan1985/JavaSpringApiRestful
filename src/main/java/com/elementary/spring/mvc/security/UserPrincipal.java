@@ -21,12 +21,12 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-
+        /* 
         this.user.getPermissionList().forEach(p->{
             GrantedAuthority authority = new SimpleGrantedAuthority(p);
             authorities.add(authority);
         });
-
+        */
         this.user.getRolesList().forEach(r->{
             GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+r );
             authorities.add(authority);
@@ -63,5 +63,8 @@ public class UserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.user.getActive() == 1;
+    }
+    public int getUserId(){
+        return this.user.getId();
     }
 }

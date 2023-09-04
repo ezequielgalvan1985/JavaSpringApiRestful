@@ -2,6 +2,9 @@ package com.elementary.spring.mvc.rest;
 
 import java.util.List;
 
+import com.elementary.spring.mvc.dto.PedidoItemDto;
+import com.elementary.spring.mvc.exception.EmployeeNotFoundException;
+import com.elementary.spring.mvc.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,5 +51,12 @@ public class PedidoRestController {
 	public void delete(@PathVariable("id") Integer id){
 		repo.deleteById(id);
 	}
-	
+
+	@GetMapping(value="/consultas/getultimopendiente/{userId}")
+	public Pedido getUltimoPendiente(@PathVariable("userId") Integer userId) {
+
+		return repo.getByUserId(userId);
+	}
+
+
 }

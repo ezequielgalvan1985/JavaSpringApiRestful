@@ -1,10 +1,11 @@
 package com.elementary.spring.mvc.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.*;
 
 import javax.persistence.*;
+
 
 
 @Entity
@@ -28,10 +29,25 @@ public class Pedido {
 	private double impuestos;
 	
 	private double subtotal;
-	
-	@OneToMany
-    private List<PedidoItem> items = new ArrayList<PedidoItem>();
-	
+
+	private String estado;
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public Set<PedidoItem> getItems() {
+		return items;
+	}
+
+
+	@OneToMany( mappedBy = "pedido",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+	private Set<PedidoItem> items = new HashSet<>();
+
 	private double total;
 
 	public int getId() {
@@ -90,13 +106,7 @@ public class Pedido {
 		this.subtotal = subtotal;
 	}
 
-	public List<PedidoItem> getItems() {
-		return items;
-	}
 
-	public void setItems(List<PedidoItem> items) {
-		this.items = items;
-	}
 
 	public double getTotal() {
 		return total;
@@ -107,7 +117,7 @@ public class Pedido {
 	}
 
 	public Pedido(int id, Date fechacreated, Date fechaupdated, Usuario usuario, double descuento, double impuestos,
-			double subtotal, List<PedidoItem> items, double total) {
+			double subtotal, double total) {
 		super();
 		this.id = id;
 		this.fechacreated = fechacreated;
@@ -116,7 +126,7 @@ public class Pedido {
 		this.descuento = descuento;
 		this.impuestos = impuestos;
 		this.subtotal = subtotal;
-		this.items = items;
+
 		this.total = total;
 	}
 
