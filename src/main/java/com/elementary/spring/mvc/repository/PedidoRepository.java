@@ -13,7 +13,11 @@ import com.elementary.spring.mvc.model.Marca;
 import com.elementary.spring.mvc.model.Pedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
-    @Query(value = "SELECT * FROM pedidos WHERE usuario_id = ?1 order by id desc limit 1", nativeQuery = true)
-    Pedido getByUserId(int userId);
+    @Query(value = "SELECT * FROM pedidos WHERE usuario_id = ?1 and estado ='PENDIENTE' order by id desc limit 1", nativeQuery = true)
+    Pedido getUltimoPendienteByUserId(int userId);
+    @Query(value = "SELECT * FROM pedidos WHERE usuario_id = ?1 order by id desc", nativeQuery = true)
+    List<Pedido> getAllByUser(int userId);
+
+
 }
 

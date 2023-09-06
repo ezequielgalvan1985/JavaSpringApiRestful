@@ -30,7 +30,7 @@ public class Pedido {
 	
 	private double subtotal;
 
-	private String estado;
+	private String estado = "PENDIENTE";
 
 	public String getEstado() {
 		return estado;

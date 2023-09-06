@@ -2,16 +2,9 @@ package com.elementary.spring.mvc.rest;
 
 import java.util.List;
 
+import com.elementary.spring.mvc.dto.PedidoItemUpdCantidadDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.elementary.spring.mvc.repository.PedidoItemRepository;
 import com.elementary.spring.mvc.model.Marca;
 import com.elementary.spring.mvc.model.PedidoItem;
@@ -41,7 +34,7 @@ public class PedidoItemRestController {
 		repo.save(e);
 	}
 
-	@PutMapping()
+	@PatchMapping()
 	public void edit(@RequestBody PedidoItem e){
 		repo.save(e);
 	}
@@ -50,5 +43,11 @@ public class PedidoItemRestController {
 	public void delete(@PathVariable("id") Integer id){
 		repo.deleteById(id);
 	}
-	
+	@PostMapping(value="/accion/upd/cantidad")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public void updCantidad(@RequestBody PedidoItemUpdCantidadDto e){
+		PedidoItem item = repo.findById(e.getId()).get();
+		item.setCantidad(e.getCantidad());
+		repo.save(item);
+	}
 }
