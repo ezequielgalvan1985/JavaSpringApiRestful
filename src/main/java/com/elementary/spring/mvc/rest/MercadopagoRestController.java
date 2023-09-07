@@ -1,10 +1,7 @@
 package com.elementary.spring.mvc.rest;
 
-import com.elementary.spring.mvc.exception.CategoriaCustomNotFoundException;
 import com.elementary.spring.mvc.model.Authorizationcode;
-import com.elementary.spring.mvc.model.Categoria;
 import com.elementary.spring.mvc.repository.AuthorizationcodeRepository;
-import com.elementary.spring.mvc.repository.CategoriaRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercadopago.MercadoPago;
@@ -12,14 +9,10 @@ import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.Card;
 import com.mercadopago.resources.Customer;
 import com.mercadopago.resources.Payment;
-import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.datastructures.customer.DefaultAddress;
 import com.mercadopago.resources.datastructures.customer.Identification;
 import com.mercadopago.resources.datastructures.customer.Phone;
-import com.mercadopago.resources.datastructures.customer.card.PaymentMethod;
-import com.mercadopago.resources.datastructures.payment.Address;
 import com.mercadopago.resources.datastructures.payment.Payer;
-import com.mercadopago.resources.datastructures.preference.Item;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -28,11 +21,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectSerializer;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -41,10 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @RestController

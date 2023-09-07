@@ -1,4 +1,4 @@
-package com.elementary.spring.mvc.exception;
+package com.elementary.spring.mvc.exception.categorias;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class ProductoNotFoundAdvice {
+public class CategoriaNotFoundAdvice {
 
   @ResponseBody
-  @ExceptionHandler(ProductoNotFoundException.class)
+  @ExceptionHandler(CategoriaNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  String productoNotFoundHandler(ProductoNotFoundException ex) {
+  String categoriaNotFoundHandler(CategoriaNotFoundException ex) {
     return ex.getMessage();
   }
 }

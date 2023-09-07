@@ -1,8 +1,7 @@
 package com.elementary.spring.mvc.security;
-import com.elementary.spring.mvc.dto.LoginResponseDto;
-import com.elementary.spring.mvc.model.Usuario;
+import com.elementary.spring.mvc.dto.users.LoginResponseDto;
 import com.auth0.jwt.JWT;
-import com.elementary.spring.mvc.core.LoginViewModel;
+import com.elementary.spring.mvc.dto.users.LoginRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,9 +39,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
             System.out.println("attemptAuthentication");
         // Grab credentials and map them to login viewmodel
-        LoginViewModel credentials = null;
+        LoginRequestDto credentials = null;
         try {
-            credentials = new ObjectMapper().readValue(request.getInputStream(), LoginViewModel.class);
+            credentials = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

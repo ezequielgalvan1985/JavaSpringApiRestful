@@ -2,15 +2,10 @@ package com.elementary.spring.mvc.rest;
 
 import java.util.List;
 
-import com.elementary.spring.mvc.core.enums.Estado;
-import com.elementary.spring.mvc.dto.PedidoItemDto;
-import com.elementary.spring.mvc.dto.PedidoUpdEstadoDto;
-import com.elementary.spring.mvc.exception.EmployeeNotFoundException;
-import com.elementary.spring.mvc.model.Employee;
+import com.elementary.spring.mvc.dto.pedidos.PedidoUpdEstadoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.elementary.spring.mvc.repository.PedidoRepository;
-import com.elementary.spring.mvc.model.Marca;
 import com.elementary.spring.mvc.model.Pedido;
 
 import org.springframework.http.HttpStatus;

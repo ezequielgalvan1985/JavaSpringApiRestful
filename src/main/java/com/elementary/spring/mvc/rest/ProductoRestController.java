@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.elementary.spring.mvc.repository.ProductoRepository;
-import com.elementary.spring.mvc.exception.CategoriaNotFoundException;
-import com.elementary.spring.mvc.exception.ProductoNotFoundException;
-import com.elementary.spring.mvc.model.Categoria;
-import com.elementary.spring.mvc.model.Marca;
+import com.elementary.spring.mvc.exception.productos.ProductoNotFoundException;
 import com.elementary.spring.mvc.model.Producto;
 
 import org.springframework.http.HttpStatus;

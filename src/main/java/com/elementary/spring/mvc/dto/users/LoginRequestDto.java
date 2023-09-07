@@ -1,6 +1,6 @@
-package com.elementary.spring.mvc.core;
+package com.elementary.spring.mvc.dto.users;
 
-public class LoginViewModel {
+public class LoginRequestDto {
     private String username;
     private String password;
 

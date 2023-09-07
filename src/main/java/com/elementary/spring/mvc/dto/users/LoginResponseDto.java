@@ -1,4 +1,4 @@
-package com.elementary.spring.mvc.dto;
+package com.elementary.spring.mvc.dto.users;
 
 public class LoginResponseDto {
 

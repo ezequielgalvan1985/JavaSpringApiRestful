@@ -2,6 +2,8 @@ package com.elementary.spring.mvc.rest;
 
 import java.util.List;
 
+import com.elementary.spring.mvc.model.UsuarioDatosPersonales;
+import com.elementary.spring.mvc.repository.UsuarioDatosPersonalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,8 @@ public class UserRestController {
 	
 	@Autowired
 	private UsuarioRepository repo;
-	
+	@Autowired
+	private UsuarioDatosPersonalesRepository repoDatosPersonales;
 	@Autowired
 	private BCryptPasswordEncoder encoder; 
 	
@@ -45,6 +48,19 @@ public class UserRestController {
 	public void add(@RequestBody Usuario e){
 		e.setPassword(encoder.encode(e.getPassword()));
 		repo.save(e);
+		//crear datos personales y asociarlo
+		UsuarioDatosPersonales datospersonales = new UsuarioDatosPersonales();
+
+		datospersonales.setNombre(e.getUsername());
+		datospersonales.setApellido("completar apellido");
+		datospersonales.setDireccion("completar direccion");
+
+		int idDatosPersonales = repoDatosPersonales.save(datospersonales).getId();
+		datospersonales.setId(idDatosPersonales);
+
+		e.setDatosPersonales(datospersonales);
+		repo.save(e);
+
 	}
 
 	@PutMapping()

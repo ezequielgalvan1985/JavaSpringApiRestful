@@ -67,4 +67,6 @@ public class UserPrincipal implements UserDetails {
     public int getUserId(){
         return this.user.getId();
     }
+
+
 }

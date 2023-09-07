@@ -2,11 +2,10 @@ package com.elementary.spring.mvc.rest;
 
 import java.util.List;
 
-import com.elementary.spring.mvc.dto.PedidoItemUpdCantidadDto;
+import com.elementary.spring.mvc.dto.pedidos.PedidoItemUpdCantidadDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.elementary.spring.mvc.repository.PedidoItemRepository;
-import com.elementary.spring.mvc.model.Marca;
 import com.elementary.spring.mvc.model.PedidoItem;
 
 import org.springframework.http.HttpStatus;

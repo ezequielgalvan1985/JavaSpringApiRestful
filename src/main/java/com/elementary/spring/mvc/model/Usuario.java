@@ -3,9 +3,7 @@ package com.elementary.spring.mvc.model;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="Users")
@@ -24,6 +22,17 @@ public class Usuario implements Serializable{
 	private String permissions ="";
 
 	private int active;
+
+	@OneToOne(optional = true)
+	private UsuarioDatosPersonales datosPersonales;
+
+	public UsuarioDatosPersonales getDatosPersonales() {
+		return datosPersonales;
+	}
+
+	public void setDatosPersonales(UsuarioDatosPersonales datosPersonales) {
+		this.datosPersonales = datosPersonales;
+	}
 
 	public int getId() {
 		return id;
@@ -76,6 +85,15 @@ public class Usuario implements Serializable{
 		this.roles = roles;
 		this.permissions = permissions;
 		this.active = active;
+	}
+
+	public Usuario( String username, String password, String roles, String permissions, int active, UsuarioDatosPersonales datos) {
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+		this.permissions = permissions;
+		this.active = active;
+		this.datosPersonales = datos;
 	}
 
 	public Usuario() {

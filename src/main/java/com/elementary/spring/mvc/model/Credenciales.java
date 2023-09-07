@@ -1,4 +1,4 @@
-package com.elementary.spring.mvc.entity;
+package com.elementary.spring.mvc.model;
 
 public class Credenciales {
 

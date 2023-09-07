@@ -1,4 +1,4 @@
-package com.elementary.spring.mvc.exception;
+package com.elementary.spring.mvc.exception.employees;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

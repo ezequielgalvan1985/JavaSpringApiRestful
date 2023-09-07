@@ -1,4 +1,4 @@
-package com.elementary.spring.mvc.dto;
+package com.elementary.spring.mvc.dto.pedidos;
 
 public class PedidoItemUpdCantidadDto {
     private int id;

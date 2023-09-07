@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.elementary.spring.mvc.exception.EmployeeNotFoundException;
+import com.elementary.spring.mvc.exception.employees.EmployeeNotFoundException;
 import com.elementary.spring.mvc.helpers.assemblers.EmployeeModelAssembler;
-import com.elementary.spring.mvc.model.Categoria;
 import com.elementary.spring.mvc.model.Employee;
 import com.elementary.spring.mvc.repository.EmployeeRepository;
 

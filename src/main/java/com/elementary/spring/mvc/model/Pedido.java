@@ -1,7 +1,8 @@
 package com.elementary.spring.mvc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import org.hibernate.annotations.CreationTimestamp;
+import com.elementary.spring.mvc.core.enums.Estado;
 import java.util.*;
 
 import javax.persistence.*;
@@ -16,7 +17,9 @@ public class Pedido {
 	@Id
 	@Column(name="id")
     private int id;
-	
+
+	@Column(nullable = false, updatable = false)
+	@CreationTimestamp
 	private Date fechacreated;
 	
 	private Date fechaupdated;
@@ -30,7 +33,7 @@ public class Pedido {
 	
 	private double subtotal;
 
-	private String estado = "PENDIENTE";
+	private String estado = Estado.PENDIENTE.toString();
 
 	public String getEstado() {
 		return estado;

@@ -6,12 +6,21 @@ public class ExceptionResponse {
 	private Date timestamp = new Date();
 	private String message;
 	private String details;
-	
-	public ExceptionResponse(String message, String details) {
+	private int status;
+	public ExceptionResponse(){};
+	public ExceptionResponse(int status,String message, String details) {
 		super();
 		this.message = message;
 		this.details = details;
-		
+		this.status  = status;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public Date getTimestamp() {

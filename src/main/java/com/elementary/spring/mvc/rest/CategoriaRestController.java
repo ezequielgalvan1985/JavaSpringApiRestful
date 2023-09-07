@@ -1,11 +1,9 @@
 package com.elementary.spring.mvc.rest;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +12,13 @@ import com.elementary.spring.mvc.repository.CategoriaRepository;
 
 
 import com.elementary.spring.mvc.model.Categoria;
-import com.elementary.spring.mvc.exception.CategoriaNotFoundException;
+import com.elementary.spring.mvc.exception.categorias.CategoriaNotFoundException;
 import com.elementary.spring.mvc.helpers.assemblers.CategoriaModelAssembler;
 
 import org.springframework.http.HttpStatus;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

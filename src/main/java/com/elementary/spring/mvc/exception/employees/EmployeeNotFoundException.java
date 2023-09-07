@@ -1,4 +1,4 @@
-package com.elementary.spring.mvc.exception;
+package com.elementary.spring.mvc.exception.employees;
 
 public class EmployeeNotFoundException extends RuntimeException {
 
