@@ -26,7 +26,7 @@ public class DbInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        /*
+/*
         this.userRepo.deleteAll();
         Usuario u1 = new Usuario ("usuario1",encoder.encode("123"), "USER","ACCESS_TEST1");
         Usuario u2 = new Usuario ("admin",encoder.encode("123"),  "ADMIN","ACCESS_TEST1,ACCESS_TEST2");
@@ -34,9 +34,8 @@ public class DbInit implements CommandLineRunner {
         List<Usuario> users = Arrays.asList(u1, u2, u3);
 
         this.userRepo.saveAll(users);
-
-
-        this.empRepo.saveAll(Arrays.asList(new Employee("Bilbo Baggins", "burglar")));
 */
+
+
     }
 }

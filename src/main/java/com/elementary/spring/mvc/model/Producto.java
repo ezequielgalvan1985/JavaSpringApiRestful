@@ -28,15 +28,16 @@ public class Producto {
 	
 	
 	private double precioOferta;
-	
-	
+
+	@ManyToOne(optional = false)
+	private Empresa empresa;
 	
 	public Producto() {
 		super();
 	}
 
 	public Producto(int id, String nombre, String descripcion, double precio, Categoria categoria, Marca marca,
-			boolean isOferta, double precioOferta) {
+			boolean isOferta, double precioOferta, Empresa empresa) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -46,6 +47,7 @@ public class Producto {
 		this.marca = marca;
 		this.isOferta = isOferta;
 		this.precioOferta = precioOferta;
+		this.empresa = empresa;
 	}
 
 	@Override
@@ -119,6 +121,11 @@ public class Producto {
 		this.descripcion = descripcion;
 	}
 
-	
-	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 }

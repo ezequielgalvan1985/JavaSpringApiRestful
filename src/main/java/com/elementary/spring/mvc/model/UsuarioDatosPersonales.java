@@ -30,18 +30,20 @@ public class UsuarioDatosPersonales {
 
     private String ciudad;
 
+    @OneToOne(optional = true)
+    private Usuario usuario;
 
 
 
     public UsuarioDatosPersonales(){}
-    public UsuarioDatosPersonales(int id, String nombre, String apellido, String direccion, String ciudad, String telefono) {
+    public UsuarioDatosPersonales(int id, String nombre, String apellido, String direccion, String ciudad, String telefono, Usuario usuario) {
         super();
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.ciudad = ciudad;
-
+        this.usuario = usuario;
         this.telefono =telefono;
     }
 
@@ -93,5 +95,11 @@ public class UsuarioDatosPersonales {
         this.ciudad = ciudad;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

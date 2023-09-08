@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface UsuarioDatosPersonalesRepository extends JpaRepository<UsuarioDatosPersonales, Integer> {
-    @Query(value = "SELECT d.* FROM users u inner join usuario_datos_personales d on u.datos_personales_id = d.id WHERE u.id = ?1 limit 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM usuario_datos_personales WHERE usuario_id = ?1 limit 1", nativeQuery = true)
     UsuarioDatosPersonales findByUserId(int userId);
 }

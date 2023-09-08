@@ -49,17 +49,13 @@ public class UserRestController {
 		e.setPassword(encoder.encode(e.getPassword()));
 		repo.save(e);
 		//crear datos personales y asociarlo
+
 		UsuarioDatosPersonales datospersonales = new UsuarioDatosPersonales();
-
 		datospersonales.setNombre(e.getUsername());
-		datospersonales.setApellido("completar apellido");
-		datospersonales.setDireccion("completar direccion");
-
-		int idDatosPersonales = repoDatosPersonales.save(datospersonales).getId();
-		datospersonales.setId(idDatosPersonales);
-
-		e.setDatosPersonales(datospersonales);
-		repo.save(e);
+		datospersonales.setApellido("apellido");
+		datospersonales.setDireccion("direccion");
+		datospersonales.setUsuario(e);
+		repoDatosPersonales.save(datospersonales);
 
 	}
 

@@ -23,16 +23,12 @@ public class Usuario implements Serializable{
 
 	private int active;
 
-	@OneToOne(optional = true)
-	private UsuarioDatosPersonales datosPersonales;
 
-	public UsuarioDatosPersonales getDatosPersonales() {
-		return datosPersonales;
-	}
 
-	public void setDatosPersonales(UsuarioDatosPersonales datosPersonales) {
-		this.datosPersonales = datosPersonales;
-	}
+
+
+
+
 
 	public int getId() {
 		return id;
@@ -85,15 +81,6 @@ public class Usuario implements Serializable{
 		this.roles = roles;
 		this.permissions = permissions;
 		this.active = active;
-	}
-
-	public Usuario( String username, String password, String roles, String permissions, int active, UsuarioDatosPersonales datos) {
-		this.username = username;
-		this.password = password;
-		this.roles = roles;
-		this.permissions = permissions;
-		this.active = active;
-		this.datosPersonales = datos;
 	}
 
 	public Usuario() {
