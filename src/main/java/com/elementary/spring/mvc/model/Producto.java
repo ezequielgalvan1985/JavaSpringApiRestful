@@ -3,7 +3,7 @@ package com.elementary.spring.mvc.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Producto")
+@Table(name="Productos")
 public class Producto {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

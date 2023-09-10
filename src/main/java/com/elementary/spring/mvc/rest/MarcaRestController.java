@@ -23,11 +23,12 @@ public class MarcaRestController {
 	
 	@Autowired
 	private MarcaRepository repo;
-	
+
+	@GetMapping()
 	public List<Marca> findAll(){
 		return repo.findAll();
 	}
-
+/*
 	@GetMapping()
 	public CollectionModel<EntityModel<Marca>> all() {
 
@@ -42,6 +43,7 @@ public class MarcaRestController {
 		CollectionModel<EntityModel<Marca>> lc = new CollectionModel (marcas, linkTo(methodOn(MarcaRestController.class).all()).withSelfRel());
 		return lc;
 	}
+*/
 	@GetMapping(value="/{id}")
 	public Marca view(@PathVariable("id") Integer id){
 		return repo.findById(id).get();
