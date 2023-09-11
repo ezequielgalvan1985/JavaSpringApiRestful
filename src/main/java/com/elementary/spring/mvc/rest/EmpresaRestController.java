@@ -53,8 +53,16 @@ public class EmpresaRestController {
     public Empresa findByUserId(@PathVariable("id") Integer id){
 
         Empresa d = repo.findByUserId(id);
-        if (d==null) throw new GenericNotFoundException("No se encontraron datos personales para el usuario "+ id);
+        if (d==null) throw new GenericNotFoundException("No se encontraron Datos de Empresa para el usuario "+ id);
         return d;
+    }
+
+    @GetMapping(value="/consultas/findbyrubro/{id}")
+    public List<Empresa> findByRubroId(@PathVariable("id") Integer id){
+
+        List<Empresa> result = repo.findByRubroId(id);
+        if (result==null) throw new GenericNotFoundException("No se encontraron Empresas para el Rubro "+ id);
+        return result;
     }
 
 }

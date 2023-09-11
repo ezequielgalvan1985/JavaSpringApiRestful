@@ -18,9 +18,7 @@ public class Empresa {
 	@NotNull
 	private String nombre;
 
-	@Column(name = "rubro", nullable = true, length = 50)
-	@Size(max = 50, message = "Debe tener maximo 4 caracteres")
-	private String rubro;
+
 
 	@Column(name = "frase", nullable = true, length = 200)
 	@Size(max = 200, message = "Debe tener maximo 4 caracteres")
@@ -44,8 +42,11 @@ public class Empresa {
 	@OneToOne(optional = true)
 	private Usuario usuario;
 
+	@ManyToOne
+	private Rubro rubro;
+
 	public Empresa(){}
-	public Empresa(int id, String nombre, String rubro, String frase, String descripcion, String direccion, String ciudad, String telefono, Usuario usuario) {
+	public Empresa(int id, String nombre, Rubro rubro, String frase, String descripcion, String direccion, String ciudad, String telefono, Usuario usuario) {
 		this.id = id;
 		this.nombre = nombre;
 		this.rubro = rubro;
@@ -73,13 +74,7 @@ public class Empresa {
 		this.nombre = nombre;
 	}
 
-	public String getRubro() {
-		return rubro;
-	}
 
-	public void setRubro(String rubro) {
-		this.rubro = rubro;
-	}
 
 	public String getFrase() {
 		return frase;
@@ -127,5 +122,13 @@ public class Empresa {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Rubro getRubro() {
+		return rubro;
+	}
+
+	public void setRubro(Rubro rubro) {
+		this.rubro = rubro;
 	}
 }
