@@ -2,6 +2,8 @@ package com.elementary.spring.mvc.rest;
 
 import java.util.List;
 
+import com.elementary.spring.mvc.exception.GenericNotFoundException;
+import com.elementary.spring.mvc.model.Pedido;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,9 @@ public class ProductoRestController {
 	
 	@GetMapping(value="/{id}")
 	public Producto view(@PathVariable("id") Integer id){
-		return repo.findById(id).orElseThrow(() -> new ProductoNotFoundException(id));
+		Producto result = repo.findById(id).get();
+		if (result==null) throw new GenericNotFoundException("No se encontro Producto para ID "+ id);
+		return result;
 	}  
 	
 	@PostMapping()
@@ -56,5 +60,9 @@ public class ProductoRestController {
 	public void delete(@PathVariable("id") Integer id){
 		repo.deleteById(id);
 	}
-	
+
+	@GetMapping(value="/consultas/findbyempresa/{empresaId}")
+	public List<Producto>  findByEmpresaId(@PathVariable("empresaId") Integer empresaId) {
+		return repo.findByEmpresaId(empresaId);
+	}
 }
