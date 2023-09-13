@@ -44,15 +44,7 @@ public class CategoriaRestController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping()
 	public List<Categoria> all() {
-		/*
-		List<EntityModel<Categoria>> categorias =
-				repo.findAll().stream()
-				.map(assembler::toModel)
-				.collect(Collectors.toList());
-		return new CollectionModel (categorias, linkTo(methodOn(CategoriaRestController.class).all()).withSelfRel());
-		*/
 		return repo.findAll();
-
 	}
 
 

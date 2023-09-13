@@ -1,14 +1,16 @@
 package com.elementary.spring.mvc.model;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name="Categorias")
-public class Categoria extends RepresentationModel<Categoria> {
+public class Categoria  {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
@@ -25,11 +27,23 @@ public class Categoria extends RepresentationModel<Categoria> {
 	@NotNull
 	private String descripcion;
 
-	public Categoria(int id, String nombre, String descripcion) {
-		super();
+
+	@ManyToOne
+	private Rubro rubro;
+
+	public Categoria(int id, String nombre, String descripcion, Rubro rubro) {
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		this.rubro = rubro;
+	}
+
+	public Rubro getRubro() {
+		return rubro;
+	}
+
+	public void setRubro(Rubro rubro) {
+		this.rubro = rubro;
 	}
 
 	public Categoria() {
