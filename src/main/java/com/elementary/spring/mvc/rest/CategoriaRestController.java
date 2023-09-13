@@ -64,18 +64,19 @@ public class CategoriaRestController {
 
 
 	@PutMapping()
-	@CrossOrigin(origins ="http://localhost:3000")
 	public void edit(@RequestBody Categoria e){
 		repo.save(e);
 	}
 
 	@DeleteMapping(value="/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@CrossOrigin(origins ="http://localhost:3000")
 	public void delete(@PathVariable("id") Integer id){
 		repo.deleteById(id);
 	}
 
 
-
+	@GetMapping("/consultas/findbyrubro/{id}")
+	public List<Categoria> all(@PathVariable("id") Integer id) {
+		return repo.findByRubroId(id);
+	}
 }
