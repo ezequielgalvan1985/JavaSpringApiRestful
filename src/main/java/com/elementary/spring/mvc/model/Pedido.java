@@ -26,7 +26,8 @@ public class Pedido {
 	
 	@ManyToOne
 	private Usuario usuario;
-	
+	@ManyToOne
+	private Empresa empresa;
 	private double descuento;
 	
 	private double impuestos;
@@ -119,7 +120,7 @@ public class Pedido {
 		this.total = total;
 	}
 
-	public Pedido(int id, Date fechacreated, Date fechaupdated, Usuario usuario, double descuento, double impuestos,
+	public Pedido(int id, Date fechacreated, Date fechaupdated, Usuario usuario, double descuento, double impuestos, Empresa empresa,
 			double subtotal, double total) {
 		super();
 		this.id = id;
@@ -129,13 +130,19 @@ public class Pedido {
 		this.descuento = descuento;
 		this.impuestos = impuestos;
 		this.subtotal = subtotal;
-
+		this.empresa = empresa;
 		this.total = total;
 	}
 
 	public Pedido() {
 		super();
 	}
-	
-	
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 }

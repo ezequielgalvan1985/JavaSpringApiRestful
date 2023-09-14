@@ -18,6 +18,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
     @Query(value = "SELECT * FROM pedidos WHERE usuario_id = ?1 order by id desc", nativeQuery = true)
     List<Pedido> getAllByUser(int userId);
 
-
+    @Query(value = "SELECT * FROM pedidos WHERE usuario_id = ?1 and empresa_id =?2 order by id desc", nativeQuery = true)
+    List<Pedido> findByUserAndEmpresa(int userId, int empresaId);
 }
 

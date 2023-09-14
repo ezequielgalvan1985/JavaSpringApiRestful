@@ -35,7 +35,7 @@ public class PublicidadRestController {
 		repo.save(e);
 	}
 
-	@PutMapping()
+	@PatchMapping()
 	public void edit(@RequestBody Publicidad e){
 		repo.save(e);
 	}
@@ -45,6 +45,11 @@ public class PublicidadRestController {
 		repo.deleteById(id);
 	}
 
-
+	@GetMapping(value="/consultas/findbyempresa/{id}")
+	public List<Publicidad> findByEmpresaId(@PathVariable("id") Integer id){
+			List<Publicidad> result = repo.findByEmpresaId(id);
+			if (result==null) throw new GenericNotFoundException("No se encontro Publicidad para la Empresa > "+ id);
+			return result;
+	}
 
 }
