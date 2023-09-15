@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +41,7 @@ public class CategoriaRestController {
 			List<Categoria> t =repo.findAll();
 			return t;
 	}
-	
-	@PreAuthorize("hasRole('ROLE_USER')")
+
 	@GetMapping()
 	public List<Categoria> all() {
 		return repo.findAll();

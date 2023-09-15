@@ -67,4 +67,11 @@ public class PedidoRestController {
 		log.info( p.toString());
 		return repo.findByUserAndEmpresa(p.getUserId(), p.getEmpresaId());
 	}
+	@GetMapping(value="/consultas/findpendientesbyuser/{userId}")
+	public List<Pedido> findPendientesByUserId(@PathVariable("userId") Integer id) {
+		log.info( id.toString());
+		return repo.findPendientesByUserId(id);
+	}
+
+
 }
