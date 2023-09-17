@@ -2,6 +2,7 @@ package com.elementary.spring.mvc.rest;
 
 import java.util.List;
 
+import com.elementary.spring.mvc.dto.pedidos.PedidoFindByUserAndEstadoRequestDto;
 import com.elementary.spring.mvc.dto.pedidos.PedidoFindByUserEmpresaRequestDto;
 import com.elementary.spring.mvc.dto.pedidos.PedidoUpdEstadoDto;
 import org.slf4j.Logger;
@@ -72,6 +73,10 @@ public class PedidoRestController {
 		log.info( id.toString());
 		return repo.findPendientesByUserId(id);
 	}
-
+	@PostMapping(value="/consultas/findbyuserandestado")
+	public List<Pedido> findByUserIdAndEstado(@RequestBody PedidoFindByUserAndEstadoRequestDto p) {
+		log.info( p.toString());
+		return repo.findByUserIdAndEstado(p.getUserId(), p.getEstadoId());
+	}
 
 }

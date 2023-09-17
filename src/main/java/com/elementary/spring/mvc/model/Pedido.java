@@ -1,8 +1,7 @@
 package com.elementary.spring.mvc.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
-import com.elementary.spring.mvc.core.enums.Estado;
+import com.elementary.spring.mvc.core.enums.EstadoConstantes;
 import java.util.*;
 
 import javax.persistence.*;
@@ -34,7 +33,18 @@ public class Pedido {
 	
 	private double subtotal;
 
-	private String estado = Estado.PENDIENTE.toString();
+	private String estado = String.valueOf(EstadoConstantes.PENDIENTE);
+
+
+	private boolean isPagado;
+
+	public boolean isPagado() {
+		return isPagado;
+	}
+
+	public void setPagado(boolean pagado) {
+		isPagado = pagado;
+	}
 
 	public String getEstado() {
 		return estado;
@@ -120,8 +130,10 @@ public class Pedido {
 		this.total = total;
 	}
 
-	public Pedido(int id, Date fechacreated, Date fechaupdated, Usuario usuario, double descuento, double impuestos, Empresa empresa,
-			double subtotal, double total) {
+	public Pedido(int id, Date fechacreated, Date fechaupdated,
+				  Usuario usuario, double descuento, double impuestos,
+				  Empresa empresa, double subtotal, double total,
+				  boolean pagado) {
 		super();
 		this.id = id;
 		this.fechacreated = fechacreated;
@@ -132,6 +144,7 @@ public class Pedido {
 		this.subtotal = subtotal;
 		this.empresa = empresa;
 		this.total = total;
+		this.isPagado = pagado;
 	}
 
 	public Pedido() {
